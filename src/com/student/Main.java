@@ -11,6 +11,6 @@ public class Main {
         UserServices userServices = new UserServices();
         String username = "s";
         userServices.addUser(username,"s","s","s","s","s","s");
-        System.out.println("binh dep trai");
+        System.out.println(userServices.login("s","s"));
     }
 }
