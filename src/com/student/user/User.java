@@ -1,8 +1,10 @@
 package com.student.user;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class User {
+    private UUID id;
     private String lastName;
     private String firstName;
     private String fullName;
@@ -13,6 +15,7 @@ public class User {
 
 
     public User(String lastName, String firstName, String fullName, String username, String password, String gender, String dateOfBirth) {
+        id = UUID.randomUUID();
         this.lastName = lastName;
         this.firstName = firstName;
         this.fullName = fullName;

@@ -14,7 +14,7 @@ public class UserServices {
         String hashedPassword = hashPassword(password);
         User tempUser = new User(lastName, firstName, fullName, username, hashedPassword, gender, dateOfBirth);
         if (!checkUserExist(username)) {
-            dataStorage.addToList(username, tempUser);
+//            dataStorage.addToList(username, tempUser);
             return true;
         }
         return false;
@@ -26,34 +26,34 @@ public class UserServices {
     }
 
     public boolean checkUserExist(String username) {
-        if (dataStorage.getListOfAllUser().containsKey(username)) {
-            return true;
-        }
+//        if (dataStorage.getListOfAllUser().containsKey(username)) {
+//            return true;
+//        }
         return false;
     }
 
-    public boolean checkPassword(String password,String username)
-    {
-        User user = dataStorage.getListOfAllUser().get(username);
-        String hashedPassword = MD5.getMd5(password);
-        if(user.getPassword().equals(hashedPassword))
-        {
-            return true;
-        }
-        return false;
-    }
+//    public boolean checkPassword(String password,String username)
+//    {
+//        User user = dataStorage.getListOfAllUser().get(username);
+//        String hashedPassword = MD5.getMd5(password);
+//        if(user.getPassword().equals(hashedPassword))
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
 
-    public boolean login(String username,String password)
-    {
-        if(checkUserExist(username))
-        {
-            if(checkPassword(password,username))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean login(String username,String password)
+//    {
+//        if(checkUserExist(username))
+//        {
+//            if(checkPassword(password,username))
+//            {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public List<String> findFriendByUsername(String keyWord){
         List<String> listFound = new ArrayList<String>();
