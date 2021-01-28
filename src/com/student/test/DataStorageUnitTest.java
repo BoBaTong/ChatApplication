@@ -2,7 +2,7 @@ package com.student.test;
 
 import com.student.DataStorage;
 import com.student.group.Group;
-import com.student.services.UserRepository;
+import com.student.repository.UserRepository;
 import com.student.user.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

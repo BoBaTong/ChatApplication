@@ -1,4 +1,4 @@
-package com.student.services;
+package com.student.repository;
 
 import com.student.DataStorage;
 import com.student.file.File;
