@@ -2,12 +2,14 @@ package com.student;
 
 import com.student.file.File;
 import com.student.group.Group;
+import com.student.group.PrivateGroup;
 import com.student.user.User;
 
 import javax.imageio.spi.ImageReaderSpi;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.UUID;
 
 public class DataStorage {
     private static DataStorage instance;
@@ -26,8 +28,17 @@ public class DataStorage {
         return instance;
     }
     //dependency injection
-    public List<User> getListUser(){
+
+    public List<User> getUserCollection() {
         return userCollection;
+    }
+
+    public List<Group> getGroupCollection() {
+        return groupCollection;
+    }
+
+    public List<File> getFileCollection() {
+        return fileCollection;
     }
 
     public <T> void save(T obj){
@@ -45,17 +56,6 @@ public class DataStorage {
         }
     }
 
-    /**
-    * @author Tong Bo
-    * @param id This is id of object
-    *
-    * @return object with specific id
-    * */
-    public <T> T findById(String id, Class<T> entityClass){
-        if (User.class.equals(entityClass)) {
-            User result = userCollection.stream().filter(u -> u.getUsername().equals(id)).findFirst().get();
-            return (T) result;
-        }
-        return null;
-    }
+
+
 }
