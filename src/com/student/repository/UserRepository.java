@@ -72,7 +72,7 @@ public class UserRepository {
         }
         else
         {
-            throw new InputMismatchException("Cannot find all!");
+            throw new InputMismatchException("Cannot find any information!");
         }
     }
 
