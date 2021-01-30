@@ -41,20 +41,20 @@ public class DataStorage {
         return fileCollection;
     }
 
-    public <T> void save(T obj){
-        if (User.class.equals(obj.getClass())) {
-            userCollection.add((User)obj);
-        }
-        else if (Group.class.equals(obj.getClass())){
-            groupCollection.add((Group) obj);
-        }
-        else if (File.class.equals(obj.getClass())){
-            fileCollection.add((File) obj);
-        }
-        else {
-            throw new InputMismatchException("Please input correctly type");
-        }
-    }
+//    public <T> void save(T obj){
+//        if (User.class.equals(obj.getClass())) {
+//            userCollection.add((User)obj);
+//        }
+//        else if (Group.class.equals(obj.getClass())){
+//            groupCollection.add((Group) obj);
+//        }
+//        else if (File.class.equals(obj.getClass())){
+//            fileCollection.add((File) obj);
+//        }
+//        else {
+//            throw new InputMismatchException("Please input correctly type");
+//        }
+//    }
 
 
 
