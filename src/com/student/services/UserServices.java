@@ -11,11 +11,7 @@ public class UserServices {
     public boolean login(String username,String password)
     {
         User user =userRepository.queryUserByUsername(username);
-        if(DataStorage.getInstance().getUserCollection().contains(user))
-        {
-            return true;
-        }
-        return false;
+        return DataStorage.getInstance().getUserCollection().contains(user);
     }
 
     public boolean checkHashPassword(String password)
