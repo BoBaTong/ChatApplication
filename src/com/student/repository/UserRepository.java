@@ -6,6 +6,7 @@ import com.student.group.Group;
 import com.student.user.User;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class UserRepository {
     DataStorage dataStorage = DataStorage.getInstance();
@@ -74,6 +75,19 @@ public class UserRepository {
         {
 
             throw new InputMismatchException("Cannot find any information!");
+        }
+    }
+
+    public static User queryUserByUsername(String username,List<User> userList)
+    {
+        try {
+            Map<String,User> map = userList.stream().collect(Collectors.toMap(User::getUsername, user -> user));
+            User result = map.get(username);
+            return result;
+        }
+        catch (Exception e)
+        {
+            throw new InputMismatchException("Please input correctly");
         }
     }
 
