@@ -20,6 +20,18 @@ class DataStorageUnitTest {
     }
 
     @Test
+    public void findByFieldTest() throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException {
+        UserRepository userRepository = new UserRepository();
+        User user = new User("Tong", "Bo", "Bo Ba Tong", "tongbo", "123456", "Male", "11/04/1997");
+        User user2 = new User("Tong", "Bo", "Bo Ba Tong", "tongbo2", "123456", "Male", "11/04/1997");
+
+        userRepository.save(user);
+        userRepository.save(user2);
+
+        User user3 = DataStorage.getInstance().findByField("Bo","firstName",User.class);
+        System.out.println(user3);
+    }
+    @Test
     void getUserTest() {
         User user = new User("Tong", "Bo", "Bo Ba Tong", "tongbo", "123456", "Male", "11/04/1997");
         userRepository.save(user);
