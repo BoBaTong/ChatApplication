@@ -18,4 +18,9 @@ public class GroupRepository extends Repository {
             throw new InputMismatchException("Please input correctly type");
         }
     }
+
+    public <T> void saveMember (T obj)
+    {
+        //
+    }
 }
