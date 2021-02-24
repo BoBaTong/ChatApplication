@@ -80,9 +80,6 @@ public class DataStorage {
 //                .getUserCollection()
 //                    .stream()
 //                    .collect(Collectors.toMap(User::getUsername, user -> user));
-            for (int i = 0; i < map.size(); i++) {
-                System.out.println(map.get(map.keySet()));
-            }
             if (map.containsKey(queryString)) {
                 return (T)map.get(queryString);
             } else {

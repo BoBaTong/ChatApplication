@@ -4,16 +4,17 @@ import com.student.DataStorage;
 import com.student.repository.UserRepository;
 import com.student.services.UserServices;
 import com.student.user.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class UserServicesTest {
+    DataStorage dataStorage = DataStorage.getInstance();
+
     @Test
-    public void UserServicesTest()
+    public void UserServicesTest()throws NoSuchFieldException,IllegalAccessException
     {
         UserServices userServices = new UserServices();
-        UserRepository userRepository = new UserRepository();
-        userRepository.save(new User("tongbo","tong","fsf","tongbo","fkwqopfk","male","312313"));
-        userRepository.save(new User("tongbo","tong","fsf","btong","fkwqopfk","male","312313"));
-        System.out.println(userServices.login("btong","fsfsdf"));
+        userServices.saveUser("tongbo","tong","fsf","tongbo","fkwqopfk","male","312313");
+        userServices.login("tongbo","fkwqopfk");
     }
 }

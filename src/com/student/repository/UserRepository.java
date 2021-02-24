@@ -13,12 +13,7 @@ public class UserRepository extends Repository {
 
     @Override
     public <T> void save(T obj) {
-        if (User.class.equals(obj.getClass())) {
-            dataStorage.getUserCollection().add((User) obj);
-        }
-        else {
-            throw new InputMismatchException("Please input correctly type");
-        }
+        dataStorage.save(obj);
     }
 
         //    public <T> void save(T obj) {
@@ -74,16 +69,8 @@ public class UserRepository extends Repository {
             }
         }
 
-        public static User queryUserByUsername (String username){
-            Map<String, User> map = DataStorage
-                    .getInstance()
-                    .getUserCollection()
-                    .stream()
-                    .collect(Collectors.toMap(User::getUsername, user -> user));
-            if (map.containsKey(username)) {
-                return map.get(username);
-            } else {
-                return null;
-            }
+        public User getUserByUsername  (String queryString) throws NoSuchFieldException,IllegalAccessException{
+            User user = dataStorage.findByField(queryString,"username",User.class);
+            return user;
         }
     }
