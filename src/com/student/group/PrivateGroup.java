@@ -9,4 +9,8 @@ public class PrivateGroup extends Group {
     private static List<User> listOfUser = new ArrayList<User>();
 
     private List<User> adminGroup;
+
+    public PrivateGroup(User user) {
+        this.adminGroup.add(user);
+    }
 }

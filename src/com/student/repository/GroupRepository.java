@@ -11,12 +11,7 @@ public class GroupRepository extends Repository {
 
     @Override
     public <T> void save(T obj) {
-        if (User.class.equals(obj.getClass())) {
-            dataStorage.getGroupCollection().add((Group) obj);
-        }
-        else {
-            throw new InputMismatchException("Please input correctly type");
-        }
+        dataStorage.save(obj);
     }
 
     public <T> void saveMember (T obj)

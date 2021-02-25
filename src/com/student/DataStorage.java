@@ -3,6 +3,7 @@ package com.student;
 import com.student.file.File;
 import com.student.group.Group;
 import com.student.group.PrivateGroup;
+import com.student.group.PublicGroup;
 import com.student.user.User;
 
 import javax.imageio.spi.ImageReaderSpi;
@@ -15,7 +16,12 @@ import java.util.stream.Collectors;
 public class DataStorage {
     private static DataStorage instance;
     private static List<User> userCollection;
+    private static List<PublicGroup> publicGroupCollection;
+    private static List<PrivateGroup> privateGroupCollection;
     private static List<Group> groupCollection;
+
+
+
     private static List<File> fileCollection;
 
 
@@ -25,6 +31,8 @@ public class DataStorage {
             userCollection = new ArrayList<>();
             groupCollection = new ArrayList<>();
             fileCollection = new ArrayList<>();
+            publicGroupCollection = new ArrayList<>();
+            privateGroupCollection = new ArrayList<>();
         }
         return instance;
     }
@@ -33,7 +41,13 @@ public class DataStorage {
     public List<User> getUserCollection() {
         return userCollection;
     }
+    public List<PublicGroup> getPublicGroupCollection() {
+        return publicGroupCollection;
+    }
 
+    public List<PrivateGroup> getPrivateGroupCollection() {
+        return privateGroupCollection;
+    }
     public List<Group> getGroupCollection() {
         return groupCollection;
     }
@@ -47,6 +61,10 @@ public class DataStorage {
             userCollection.add((User) obj);
         } else if (Group.class.equals(obj.getClass())) {
             groupCollection.add((Group) obj);
+        } else if (PrivateGroup.class.equals(obj.getClass())) {
+            privateGroupCollection.add((PrivateGroup) obj);
+        } else if (PublicGroup.class.equals(obj.getClass())) {
+            publicGroupCollection.add((PublicGroup) obj);
         } else if (File.class.equals(obj.getClass())) {
             fileCollection.add((File) obj);
         } else {
@@ -59,6 +77,10 @@ public class DataStorage {
             return (List<T>) this.getUserCollection();
         } else if (Group.class.equals(entityClass)) {
             return (List<T>) this.getGroupCollection();
+        } else if (PublicGroup.class.equals(entityClass)) {
+            return (List<T>) this.getPublicGroupCollection();
+        } else if (PrivateGroup.class.equals(entityClass)) {
+            return (List<T>) this.getPrivateGroupCollection();
         } else if (File.class.equals(entityClass)) {
             return (List<T>) this.getFileCollection();
         } else {

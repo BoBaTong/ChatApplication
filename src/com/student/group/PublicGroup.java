@@ -8,9 +8,17 @@ import java.util.UUID;
 
 public class PublicGroup extends Group {
     private static List<User>listOfUser = new ArrayList<User>();
-    private UUID idGroup;
+    private List<User> adminGroup;
+    private UUID inviteCode;
 
-    public PublicGroup(UUID idGroup) {
-        idGroup = UUID.randomUUID();
+    public PublicGroup(User user) {
+        inviteCode = UUID.randomUUID();
+        adminGroup.add(user);
+
     }
+
+    public UUID getInviteCode() {
+        return inviteCode;
+    }
+
 }
