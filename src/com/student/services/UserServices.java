@@ -3,8 +3,6 @@ package com.student.services;
 import com.student.repository.UserRepository;
 import com.student.user.User;
 
-import java.util.InputMismatchException;
-
 public class UserServices {
     UserRepository userRepository = new UserRepository();
     MD5 md5 = new MD5();
@@ -12,7 +10,7 @@ public class UserServices {
     public boolean saveUser(String lastName, String firstName, String fullName, String username, String password, String gender, String dateOfBirth)throws NoSuchFieldException,IllegalAccessException
     {
         String hashedPassword = MD5.getMd5(password);
-        if(!checkUserContain(username))
+        if(!checkUserExist(username))
         {
             User user = new User(lastName,firstName,fullName,username,hashedPassword,gender,dateOfBirth);
             userRepository.save(user);
@@ -25,7 +23,7 @@ public class UserServices {
 
     public void login(String username, String password)throws NoSuchFieldException,IllegalAccessException
     {
-        if(checkUserContain(username))
+        if(checkUserExist(username))
         {
             if(checkHashPassword(username,password))
             {
@@ -49,7 +47,7 @@ public class UserServices {
            return userRepository.getUserByUsername(username).getPassword().equals(hashedPassword);
 
     }
-    public boolean checkUserContain(String username)  throws NoSuchFieldException,IllegalAccessException
+    public boolean checkUserExist(String username)  throws NoSuchFieldException,IllegalAccessException
     {
          if(userRepository.getUserByUsername(username) != null)
         {

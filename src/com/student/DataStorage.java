@@ -126,6 +126,42 @@ public class DataStorage {
                 return null;
             }
         }
+        else if(PublicGroup.class.equals(classes)) {
+            Field field = PublicGroup.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            Map<String,PublicGroup>map = new HashMap<>();
+            for (PublicGroup publicGroup : getPublicGroupCollection())
+            {
+                map.put(field.get(publicGroup).toString(),publicGroup);
+            }
+//            Map<String, User> map = this
+//                .getUserCollection()
+//                    .stream()
+//                    .collect(Collectors.toMap(User::getUsername, user -> user));
+            if (map.containsKey(queryString)) {
+                return (T)map.get(queryString);
+            } else {
+                return null;
+            }
+        }
+        else if(PrivateGroup.class.equals(classes)) {
+            Field field = PrivateGroup.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            Map<String,PrivateGroup>map = new HashMap<>();
+            for (PrivateGroup privateGroup : getPrivateGroupCollection())
+            {
+                map.put(field.get(privateGroup).toString(),privateGroup);
+            }
+//            Map<String, User> map = this
+//                .getUserCollection()
+//                    .stream()
+//                    .collect(Collectors.toMap(User::getUsername, user -> user));
+            if (map.containsKey(queryString)) {
+                return (T)map.get(queryString);
+            } else {
+                return null;
+            }
+        }
         else {
 
             throw new InputMismatchException("Cannot find any information!");

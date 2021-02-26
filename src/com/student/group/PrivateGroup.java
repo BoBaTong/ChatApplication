@@ -6,11 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrivateGroup extends Group {
-    private static List<User> listOfUser = new ArrayList<User>();
+    private static int count = 0;
+    private int id=0;
 
-    private List<User> adminGroup;
 
-    public PrivateGroup(User user) {
-        this.adminGroup.add(user);
+    public PrivateGroup() {
+        id=count++;
+    }
+
+    private List<User> listOfUser = new ArrayList<User>();
+
+    private List<User> adminGroup = new ArrayList<>();
+
+    public List<User> getListOfUser() {
+        return listOfUser;
+    }
+
+    public void setListOfUser(List<User> listOfUser) {
+        this.listOfUser = listOfUser;
+    }
+
+    public List<User> getAdminGroup() {
+        return adminGroup;
+    }
+
+    public void setAdminGroup(List<User> adminGroup) {
+        this.adminGroup = adminGroup;
     }
 }
