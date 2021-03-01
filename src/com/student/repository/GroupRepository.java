@@ -16,6 +16,16 @@ public class GroupRepository extends Repository {
         dataStorage.save(obj);
     }
 
+    public <T> void update(T obj,int objIndex)
+    {
+        dataStorage.update(obj,objIndex);
+    }
+
+    public <T> int getIndexOfObject(T obj)
+    {
+        return dataStorage.getIndexOfObject(obj);
+    }
+
     public PublicGroup getGroupByInviteCode  (String queryString) throws NoSuchFieldException,IllegalAccessException{
         PublicGroup publicGroup = dataStorage.findByField(queryString,"inviteCode",PublicGroup.class);
         return publicGroup;

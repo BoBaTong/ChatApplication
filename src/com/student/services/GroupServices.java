@@ -1,5 +1,6 @@
 package com.student.services;
 
+import com.student.DataStorage;
 import com.student.group.PrivateGroup;
 import com.student.group.PublicGroup;
 import com.student.repository.GroupRepository;
@@ -10,7 +11,7 @@ import java.util.InputMismatchException;
 public class GroupServices {
 
     GroupRepository groupRepository = new GroupRepository();
-
+    DataStorage dataStorage = DataStorage.getInstance();
 
     public void createGroup(int groupSelection, User currentUser)
     {
@@ -47,6 +48,7 @@ public class GroupServices {
                 }
                 else {
                     privateGroup.getListOfUser().add(invitedUser);
+                    groupRepository.save(privateGroup);
                 }
             }
             else
@@ -83,6 +85,7 @@ public class GroupServices {
                 }
                 else {
                     publicGroup.getListOfUser().add(invitedUser);
+                    groupRepository.update(publicGroup,groupRepository.getIndexOfObject(publicGroup));
                 }
             }
             else

@@ -72,6 +72,41 @@ public class DataStorage {
         }
     }
 
+    public <T> int getIndexOfObject(T obj)
+    {
+        int index;
+        if (User.class.equals(obj.getClass())) {
+           return index = userCollection.indexOf((User) obj);
+        } else if (Group.class.equals(obj.getClass())) {
+            return index = groupCollection.indexOf((Group) obj);
+        } else if (PrivateGroup.class.equals(obj.getClass())) {
+            return index = privateGroupCollection.indexOf((PrivateGroup) obj);
+        } else if (PublicGroup.class.equals(obj.getClass())) {
+            return index = publicGroupCollection.indexOf((PublicGroup) obj);
+        } else if (File.class.equals(obj.getClass())) {
+            return index = fileCollection.indexOf((File) obj);
+        } else {
+            throw new InputMismatchException("Please input correctly type");
+        }
+    }
+
+    public <T> void update(T obj,int index)
+    {
+        if (User.class.equals(obj.getClass())) {
+            userCollection.set(index,(User) obj);
+        } else if (Group.class.equals(obj.getClass())) {
+            groupCollection.set(index,(Group) obj);
+        } else if (PrivateGroup.class.equals(obj.getClass())) {
+            privateGroupCollection.set(index,(PrivateGroup) obj);
+        } else if (PublicGroup.class.equals(obj.getClass())) {
+            publicGroupCollection.set(index,(PublicGroup) obj);
+        } else if (File.class.equals(obj.getClass())) {
+            fileCollection.set(index,(File) obj);
+        } else {
+            throw new InputMismatchException("Please input correctly type");
+        }
+    }
+
     public <T> List<T> findAll(Class<T> entityClass) {
         if (User.class.equals(entityClass)) {
             return (List<T>) this.getUserCollection();
