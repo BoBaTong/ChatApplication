@@ -1,5 +1,7 @@
 package com.student.group;
 
+import com.student.file.File;
+import com.student.message.Message;
 import com.student.user.User;
 
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ public class PrivateGroup extends Group {
 
     public PrivateGroup() {
         id=count++;
+        groupMessages = new ArrayList<>();
+        groupFiles = new ArrayList<>();
     }
 
     private List<User> listOfUser = new ArrayList<User>();
@@ -33,4 +37,6 @@ public class PrivateGroup extends Group {
     public void setAdminGroup(List<User> adminGroup) {
         this.adminGroup = adminGroup;
     }
+
+
 }

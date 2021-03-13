@@ -4,6 +4,7 @@ import com.student.DataStorage;
 import com.student.group.PrivateGroup;
 import com.student.group.PublicGroup;
 import com.student.repository.GroupRepository;
+import com.student.repository.UserRepository;
 import com.student.user.User;
 
 import java.util.InputMismatchException;
@@ -12,22 +13,24 @@ public class GroupServices {
 
     GroupRepository groupRepository = new GroupRepository();
     DataStorage dataStorage = DataStorage.getInstance();
+    UserRepository userRepository = new UserRepository();
 
-    public void createGroup(int groupSelection, User currentUser)
-    {
+
+    public void createGroup(int groupSelection, int userID) throws NoSuchFieldException, IllegalAccessException {
+        User user = userRepository.getUserByID(userID);
         if(groupSelection==0)
         {
             PrivateGroup privateGroup = new PrivateGroup();
-            privateGroup.getAdminGroup().add(currentUser);
-            privateGroup.getListOfUser().add(currentUser);
+            privateGroup.getAdminGroup().add(user);
+            privateGroup.getListOfUser().add(user);
             groupRepository.save(privateGroup);
             System.out.println("Private group created successful!");
         }
         else if(groupSelection==1)
         {
             PublicGroup publicGroup = new PublicGroup();
-            publicGroup.getAdminGroup().add(currentUser);
-            publicGroup.getListOfUser().add(currentUser);
+            publicGroup.getAdminGroup().add(user);
+            publicGroup.getListOfUser().add(user);
             groupRepository.save(publicGroup);
             System.out.println("Public group created successful!, invite code: "+publicGroup.getInviteCode());
         }
@@ -116,7 +119,7 @@ public class GroupServices {
             return false;
         }
     }
-    private <T> boolean checkMemberGroup(User user,int groupID,Class<T> entityClass)throws NoSuchFieldException,IllegalAccessException
+    public  <T> boolean checkMemberGroup(User user,int groupID,Class<T> entityClass)throws NoSuchFieldException,IllegalAccessException
     {
         if(entityClass.equals(PublicGroup.class)) {
             PublicGroup publicGroup = groupRepository.getGroupByID(groupID);
@@ -157,14 +160,8 @@ public class GroupServices {
             return false;
         }
     }
-    //create groupPublic
-    //create groupPrivate
-
-    //join (code)
-    //invite (addAnotherUser)
-    //addMemberPublic (code and invite)
 
 
-    //addMemberPrivate (admin??? -> list)
+
 
 }

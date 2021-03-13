@@ -137,6 +137,7 @@ public class DataStorage {
 //                .getUserCollection()
 //                    .stream()
 //                    .collect(Collectors.toMap(User::getUsername, user -> user));
+            System.out.println(map.keySet());
             if (map.containsKey(queryString)) {
                 return (T)map.get(queryString);
             } else {

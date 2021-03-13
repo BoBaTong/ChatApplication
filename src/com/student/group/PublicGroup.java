@@ -35,6 +35,8 @@ public class PublicGroup extends Group {
     }
 
     public PublicGroup() {
+        groupMessages = new ArrayList<>();
+        groupFiles = new ArrayList<>();
 //        inviteCode = UUID.randomUUID().toString();
         inviteCode = "41c36ae4-b035-45d1-89dc-e6f235d45954";
         id=count++;

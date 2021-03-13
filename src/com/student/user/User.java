@@ -1,10 +1,12 @@
 package com.student.user;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class User {
-    private UUID id;
+    private int id=0;
     private String lastName;
     private String firstName;
     private String fullName;
@@ -12,10 +14,28 @@ public class User {
     private String password;
     private String gender;
     private String dateOfBirth;
+    private List<Integer> sentMessages;
+    private List<Integer> sentFiles;
+    private static int count = 0;
 
+    public List<Integer> getSentMessages() {
+        return sentMessages;
+    }
+
+    public void setSentMessages(List<Integer> sentMessages) {
+        this.sentMessages = sentMessages;
+    }
+
+    public List<Integer> getSentFiles() {
+        return sentFiles;
+    }
+
+    public void setSentFiles(List<Integer> sentFiles) {
+        this.sentFiles = sentFiles;
+    }
 
     public User(String lastName, String firstName, String fullName, String username, String password, String gender, String dateOfBirth) {
-        id = UUID.randomUUID();
+        id = count++;
         this.lastName = lastName;
         this.firstName = firstName;
         this.fullName = fullName;
@@ -23,6 +43,8 @@ public class User {
         this.password = password;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
+        this.sentFiles = new ArrayList<>();
+        this.sentMessages = new ArrayList<>();
     }
 
     public String getLastName() {
@@ -80,12 +102,11 @@ public class User {
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
