@@ -1,19 +1,14 @@
 package com.student.group;
 
-import com.student.file.File;
-import com.student.message.Message;
 import com.student.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PrivateGroup extends Group {
-    private static int count = 0;
-    private int id=0;
 
 
     public PrivateGroup() {
-        id=count++;
         groupMessages = new ArrayList<>();
         groupFiles = new ArrayList<>();
     }

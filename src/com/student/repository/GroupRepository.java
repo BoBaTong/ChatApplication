@@ -2,11 +2,8 @@ package com.student.repository;
 
 import com.student.DataStorage;
 import com.student.group.Group;
-import com.student.group.PrivateGroup;
-import com.student.group.PublicGroup;
-import com.student.user.User;
 
-import java.util.InputMismatchException;
+import java.util.List;
 
 public class GroupRepository extends Repository {
     DataStorage dataStorage = DataStorage.getInstance();
@@ -16,6 +13,10 @@ public class GroupRepository extends Repository {
         dataStorage.save(obj);
     }
 
+    public <T> List<T> findAll(Class<T> entityClass)
+    {
+        return dataStorage.findAll(entityClass);
+    }
     public <T> void update(T obj,int objIndex)
     {
         dataStorage.update(obj,objIndex);
@@ -26,17 +27,13 @@ public class GroupRepository extends Repository {
         return dataStorage.getIndexOfObject(obj);
     }
 
-    public PublicGroup getGroupByInviteCode  (String queryString) throws NoSuchFieldException,IllegalAccessException{
-        PublicGroup publicGroup = dataStorage.findByField(queryString,"inviteCode",PublicGroup.class);
-        return publicGroup;
+    public Group getGroupByInviteCode  (String queryString) throws NoSuchFieldException,IllegalAccessException{
+        Group group = dataStorage.findByField(queryString,"inviteCode", Group.class);
+        return group;
     }
-    public PublicGroup getGroupByID  (int groupID) throws NoSuchFieldException,IllegalAccessException{
-        PublicGroup publicGroup = dataStorage.findByField(groupID+"","id",PublicGroup.class);
-        return publicGroup;
-    }
-    public PrivateGroup getPrivateGroupByID  (int groupID) throws NoSuchFieldException,IllegalAccessException{
-        PrivateGroup privateGroup = dataStorage.findByField(groupID+"","id", PrivateGroup.class);
-        return privateGroup;
+    public Group getGroupByID(int groupID) throws NoSuchFieldException,IllegalAccessException{
+        Group group = dataStorage.findByField(groupID+"","id", Group.class);
+        return group;
     }
 
 

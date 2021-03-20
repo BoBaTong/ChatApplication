@@ -1,9 +1,11 @@
 package com.student.user;
 
+import com.student.message.Message;
+
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 public class User {
     private int id=0;
@@ -14,9 +16,30 @@ public class User {
     private String password;
     private String gender;
     private String dateOfBirth;
+    private List<Message> receivedMessage;
+    private Map<User,String> alias;
     private List<Integer> sentMessages;
     private List<Integer> sentFiles;
     private static int count = 0;
+
+
+    public List<Message> getReceivedMessage() {
+        return receivedMessage;
+    }
+
+    public Map<User, String> getAlias() {
+        return alias;
+    }
+
+    public void setAlias(Map<User, String> alias) {
+        this.alias = alias;
+    }
+
+    public void setReceivedMessage(List<Message> receivedMessage) {
+        this.receivedMessage = receivedMessage;
+    }
+
+
 
     public List<Integer> getSentMessages() {
         return sentMessages;
@@ -34,17 +57,30 @@ public class User {
         this.sentFiles = sentFiles;
     }
 
-    public User(String lastName, String firstName, String fullName, String username, String password, String gender, String dateOfBirth) {
+//    public User(String lastName, String firstName, String fullName, String username, String password, String gender, String dateOfBirth) {
+//        id = count++;
+//        this.lastName = lastName;
+//        this.firstName = firstName;
+//        this.fullName = fullName;
+//        this.username = username;
+//        this.password = password;
+//        this.sentFiles = new ArrayList<>();
+//        this.sentMessages = new ArrayList<>();
+//        this.receivedMessage = new ArrayList<>();
+//    }
+
+
+    public User(String lastName, String firstName, String fullName, String username, String password) {
         id = count++;
         this.lastName = lastName;
         this.firstName = firstName;
         this.fullName = fullName;
         this.username = username;
         this.password = password;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
         this.sentFiles = new ArrayList<>();
         this.sentMessages = new ArrayList<>();
+        this.receivedMessage = new ArrayList<>();
+        this.alias = new HashMap<User,String>();
     }
 
     public String getLastName() {

@@ -6,18 +6,13 @@ import com.student.group.PrivateGroup;
 import com.student.group.PublicGroup;
 import com.student.user.User;
 
-import javax.imageio.spi.ImageReaderSpi;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DataStorage {
     private static DataStorage instance;
     private static List<User> userCollection;
-    private static List<PublicGroup> publicGroupCollection;
-    private static List<PrivateGroup> privateGroupCollection;
+
     private static List<Group> groupCollection;
 
 
@@ -31,8 +26,6 @@ public class DataStorage {
             userCollection = new ArrayList<>();
             groupCollection = new ArrayList<>();
             fileCollection = new ArrayList<>();
-            publicGroupCollection = new ArrayList<>();
-            privateGroupCollection = new ArrayList<>();
         }
         return instance;
     }
@@ -41,13 +34,7 @@ public class DataStorage {
     public List<User> getUserCollection() {
         return userCollection;
     }
-    public List<PublicGroup> getPublicGroupCollection() {
-        return publicGroupCollection;
-    }
 
-    public List<PrivateGroup> getPrivateGroupCollection() {
-        return privateGroupCollection;
-    }
     public List<Group> getGroupCollection() {
         return groupCollection;
     }
@@ -61,11 +48,13 @@ public class DataStorage {
             userCollection.add((User) obj);
         } else if (Group.class.equals(obj.getClass())) {
             groupCollection.add((Group) obj);
-        } else if (PrivateGroup.class.equals(obj.getClass())) {
-            privateGroupCollection.add((PrivateGroup) obj);
-        } else if (PublicGroup.class.equals(obj.getClass())) {
-            publicGroupCollection.add((PublicGroup) obj);
-        } else if (File.class.equals(obj.getClass())) {
+        }else if (PublicGroup.class.equals(obj.getClass())) {
+            groupCollection.add((PublicGroup) obj);
+        }
+        else if (PrivateGroup.class.equals(obj.getClass())) {
+            groupCollection.add((PrivateGroup) obj);
+        }
+        else if (File.class.equals(obj.getClass())) {
             fileCollection.add((File) obj);
         } else {
             throw new InputMismatchException("Please input correctly type");
@@ -76,15 +65,14 @@ public class DataStorage {
     {
         int index;
         if (User.class.equals(obj.getClass())) {
-           return index = userCollection.indexOf((User) obj);
+            return index = userCollection.indexOf(obj);
         } else if (Group.class.equals(obj.getClass())) {
-            return index = groupCollection.indexOf((Group) obj);
-        } else if (PrivateGroup.class.equals(obj.getClass())) {
-            return index = privateGroupCollection.indexOf((PrivateGroup) obj);
-        } else if (PublicGroup.class.equals(obj.getClass())) {
-            return index = publicGroupCollection.indexOf((PublicGroup) obj);
-        } else if (File.class.equals(obj.getClass())) {
-            return index = fileCollection.indexOf((File) obj);
+            return index = groupCollection.indexOf(obj);
+        }else if (PublicGroup.class.equals(obj.getClass())) {
+            return index = groupCollection.indexOf(obj);
+        }
+        else if (File.class.equals(obj.getClass())) {
+            return index = fileCollection.indexOf(obj);
         } else {
             throw new InputMismatchException("Please input correctly type");
         }
@@ -96,11 +84,10 @@ public class DataStorage {
             userCollection.set(index,(User) obj);
         } else if (Group.class.equals(obj.getClass())) {
             groupCollection.set(index,(Group) obj);
-        } else if (PrivateGroup.class.equals(obj.getClass())) {
-            privateGroupCollection.set(index,(PrivateGroup) obj);
-        } else if (PublicGroup.class.equals(obj.getClass())) {
-            publicGroupCollection.set(index,(PublicGroup) obj);
-        } else if (File.class.equals(obj.getClass())) {
+        }else if (PublicGroup.class.equals(obj.getClass())) {
+            groupCollection.set(index,(Group) obj);
+        }
+        else if (File.class.equals(obj.getClass())) {
             fileCollection.set(index,(File) obj);
         } else {
             throw new InputMismatchException("Please input correctly type");
@@ -112,10 +99,6 @@ public class DataStorage {
             return (List<T>) this.getUserCollection();
         } else if (Group.class.equals(entityClass)) {
             return (List<T>) this.getGroupCollection();
-        } else if (PublicGroup.class.equals(entityClass)) {
-            return (List<T>) this.getPublicGroupCollection();
-        } else if (PrivateGroup.class.equals(entityClass)) {
-            return (List<T>) this.getPrivateGroupCollection();
         } else if (File.class.equals(entityClass)) {
             return (List<T>) this.getFileCollection();
         } else {
@@ -137,7 +120,7 @@ public class DataStorage {
 //                .getUserCollection()
 //                    .stream()
 //                    .collect(Collectors.toMap(User::getUsername, user -> user));
-            System.out.println(map.keySet());
+//            System.out.println(map.keySet());
             if (map.containsKey(queryString)) {
                 return (T)map.get(queryString);
             } else {
@@ -145,7 +128,7 @@ public class DataStorage {
             }
         }
         else if(Group.class.equals(classes)) {
-            Field field = User.class.getDeclaredField(fieldName);
+            Field field = Group.class.getDeclaredField(fieldName);
             field.setAccessible(true);
             Map<String,Group>map = new HashMap<>();
             for (Group group : getGroupCollection())
@@ -156,48 +139,16 @@ public class DataStorage {
 //                .getUserCollection()
 //                    .stream()
 //                    .collect(Collectors.toMap(User::getUsername, user -> user));
+//                        System.out.println(map.keySet());
+//            System.out.println(map.entrySet());
+
             if (map.containsKey(queryString)) {
                 return (T)map.get(queryString);
             } else {
                 return null;
             }
         }
-        else if(PublicGroup.class.equals(classes)) {
-            Field field = PublicGroup.class.getDeclaredField(fieldName);
-            field.setAccessible(true);
-            Map<String,PublicGroup>map = new HashMap<>();
-            for (PublicGroup publicGroup : getPublicGroupCollection())
-            {
-                map.put(field.get(publicGroup).toString(),publicGroup);
-            }
-//            Map<String, User> map = this
-//                .getUserCollection()
-//                    .stream()
-//                    .collect(Collectors.toMap(User::getUsername, user -> user));
-            if (map.containsKey(queryString)) {
-                return (T)map.get(queryString);
-            } else {
-                return null;
-            }
-        }
-        else if(PrivateGroup.class.equals(classes)) {
-            Field field = PrivateGroup.class.getDeclaredField(fieldName);
-            field.setAccessible(true);
-            Map<String,PrivateGroup>map = new HashMap<>();
-            for (PrivateGroup privateGroup : getPrivateGroupCollection())
-            {
-                map.put(field.get(privateGroup).toString(),privateGroup);
-            }
-//            Map<String, User> map = this
-//                .getUserCollection()
-//                    .stream()
-//                    .collect(Collectors.toMap(User::getUsername, user -> user));
-            if (map.containsKey(queryString)) {
-                return (T)map.get(queryString);
-            } else {
-                return null;
-            }
-        }
+
         else {
 
             throw new InputMismatchException("Cannot find any information!");

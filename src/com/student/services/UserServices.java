@@ -5,14 +5,13 @@ import com.student.user.User;
 
 public class UserServices {
     UserRepository userRepository = new UserRepository();
-    MD5 md5 = new MD5();
 
-    public boolean saveUser(String lastName, String firstName, String fullName, String username, String password, String gender, String dateOfBirth)throws NoSuchFieldException,IllegalAccessException
+    public boolean saveUser(String lastName, String firstName, String fullName, String username, String password)throws NoSuchFieldException,IllegalAccessException
     {
         String hashedPassword = MD5.getMd5(password);
         if(!checkUserExist(username))
         {
-            User user = new User(lastName,firstName,fullName,username,hashedPassword,gender,dateOfBirth);
+            User user = new User(lastName,firstName,fullName,username,hashedPassword);
             userRepository.save(user);
             return true;
         }
@@ -21,24 +20,25 @@ public class UserServices {
 
     }
 
-    public void login(String username, String password)throws NoSuchFieldException,IllegalAccessException
+    public String login(String username, String password)throws NoSuchFieldException,IllegalAccessException
     {
+        String result;
         if(checkUserExist(username))
         {
             if(checkHashPassword(username,password))
             {
-                System.out.println("Login success!");
+                result="Login success!";
             }
             else
             {
-                System.out.println("Looks like these are not your correct details. Please try again.");
+                result="Looks like these are not your correct details. Please try again.";
             }
         }
         else
         {
-            System.out.println("Looks like these are not your correct details. Please try again.");
+            result="Looks like these are not your correct details. Please try again.";
         }
-
+        return result;
     }
 
     public boolean checkHashPassword(String username,String password) throws NoSuchFieldException,IllegalAccessException
@@ -55,5 +55,12 @@ public class UserServices {
         }
          else
              return false;
+    }
+    public String setAlias(User user1,User user2,String alias)
+    {
+        String result;
+        user1.getAlias().put(user2,alias);
+        return result="Set alias success!";
+        //update
     }
 }
