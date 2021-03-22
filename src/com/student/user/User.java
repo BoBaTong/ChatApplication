@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class User {
+
+    //id and count to fake auto-increased id
     private int id=0;
+    private static int count = 0;
     private String lastName;
     private String firstName;
     private String fullName;
@@ -16,15 +19,14 @@ public class User {
     private String password;
     private String gender;
     private String dateOfBirth;
-    private List<Message> receivedMessage;
+    private List<Message> receivedMessages;
     private Map<User,String> alias;
     private List<Integer> sentMessages;
     private List<Integer> sentFiles;
-    private static int count = 0;
 
 
-    public List<Message> getReceivedMessage() {
-        return receivedMessage;
+    public List<Message> getReceivedMessages() {
+        return receivedMessages;
     }
 
     public Map<User, String> getAlias() {
@@ -35,8 +37,8 @@ public class User {
         this.alias = alias;
     }
 
-    public void setReceivedMessage(List<Message> receivedMessage) {
-        this.receivedMessage = receivedMessage;
+    public void setReceivedMessages(List<Message> receivedMessages) {
+        this.receivedMessages = receivedMessages;
     }
 
 
@@ -79,7 +81,7 @@ public class User {
         this.password = password;
         this.sentFiles = new ArrayList<>();
         this.sentMessages = new ArrayList<>();
-        this.receivedMessage = new ArrayList<>();
+        this.receivedMessages = new ArrayList<>();
         this.alias = new HashMap<User,String>();
     }
 

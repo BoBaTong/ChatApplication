@@ -43,6 +43,10 @@ public class DataStorage {
         return fileCollection;
     }
 
+    /**
+     * @param obj the object that you need add to db based on object's class
+     * @throws InputMismatchException if object has no corresponding class
+     * */
     public <T> void save(T obj) {
         if (User.class.equals(obj.getClass())) {
             userCollection.add((User) obj);
@@ -61,6 +65,11 @@ public class DataStorage {
         }
     }
 
+
+    /**
+     * @param obj the object that you want to find it's index in db
+     * @return the number which is the index of input object
+     */
     public <T> int getIndexOfObject(T obj)
     {
         int index;
@@ -78,6 +87,13 @@ public class DataStorage {
         }
     }
 
+
+    /**
+     * @param obj the object that you need to update to DB
+     * @param index the index of object that you need to update DB
+     * update the object with new value based on object's index
+     * @throws InputMismatchException if object has no corresponding class
+     */
     public <T> void update(T obj,int index)
     {
         if (User.class.equals(obj.getClass())) {
@@ -107,6 +123,14 @@ public class DataStorage {
         }
     }
 
+    /**
+     * @param queryString the value that you want to find
+     * @param fieldName a field name of a class
+     * @param classes class of object
+     * this method will using java reflection to map field->key and object->value
+     * @return an object that satisfied the conditions
+     * @throws InputMismatchException if object has no corresponding class
+     */
     public <T> T findByField(String queryString, String fieldName, Class<T> classes) throws NoSuchFieldException,IllegalAccessException {
         if(User.class.equals(classes)) {
             Field field = User.class.getDeclaredField(fieldName);

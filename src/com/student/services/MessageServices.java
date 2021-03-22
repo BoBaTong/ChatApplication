@@ -18,22 +18,29 @@ public class MessageServices {
     GroupServices groupServices = new GroupServices();
 
 
-    public void sendMessageUserToGroup(Message message, int sendID, int receiveID)
+    /**
+     * @param sendID User id
+     * @param receiveID Group id
+     */
+    public void sendMessageToGroup(Message message, int sendID, int receiveID)
             throws NoSuchFieldException, IllegalAccessException {
         groupRepository.getGroupByID(receiveID).groupMessages.add(message);
         userRepository.getUserByID(sendID).getSentMessages().add(message.getId());
         //update group and user to DB
     }
-
-    public void sendMessageUserToUser(Message message, int sendID, int receiveID)
+    /**
+     * @param sendID User who sent id
+     * @param receiveID User who received id
+     */
+    public void sendMessageToUser(Message message, int sendID, int receiveID)
             throws NoSuchFieldException, IllegalAccessException {
-        userRepository.getUserByID(receiveID).getReceivedMessage().add(message);
+        userRepository.getUserByID(receiveID).getReceivedMessages().add(message);
         userRepository.getUserByID(sendID).getSentMessages().add(message.getId());
         //update group and user to DB
 
     }
 
-    public void sendFileUserToGroup(File file, int receiveID, int sendID)
+    public void sendFileToGroup(File file, int receiveID, int sendID)
             throws NoSuchFieldException, IllegalAccessException {
         file.setFileName(file.getId() + "");
         groupRepository.getGroupByID(receiveID).groupFiles.add(file);
@@ -42,7 +49,7 @@ public class MessageServices {
     }
 
 
-    public void sendFileUserToUser(File file, int receiveID, int sendID)
+    public void sendFileToUser(File file, int receiveID, int sendID)
             throws NoSuchFieldException, IllegalAccessException {
         file.setFileName(file.getId() + "");
         userRepository.getUserByID(receiveID).getSentFiles().add(file.getId());
@@ -50,6 +57,10 @@ public class MessageServices {
         //update
     }
 
+
+    /**
+     * @return a list with all messages that contain in group
+     * */
     public List<Message> showAllMessageGroup(int userID, int groupID)
             throws NoSuchFieldException, IllegalAccessException {
         List<Message> messageList = new ArrayList<Message>();
@@ -63,15 +74,20 @@ public class MessageServices {
         return messageList;
     }
 
+
+    /**
+     * @return a list with all messages that message id in sent user equals with the id contains in received messages in
+     * received user
+     * */
     public List<Message> showAllMessageUser(int userID, int user2ID)
             throws NoSuchFieldException, IllegalAccessException {
         List<Message> messageList = new ArrayList<Message>();
         User user1 = userRepository.getUserByID(userID);
         User user2 = userRepository.getUserByID(user2ID);
         for (int messageID : user1.getSentMessages()) {
-            for (int i = user2.getReceivedMessage().size(); i > 0; i--) {
-                if(messageID==user2.getReceivedMessage().get(i - 1).getId()) {
-                    messageList.add(user2.getReceivedMessage().get(i - 1));
+            for (int i = user2.getReceivedMessages().size(); i > 0; i--) {
+                if(messageID==user2.getReceivedMessages().get(i - 1).getId()) {
+                    messageList.add(user2.getReceivedMessages().get(i - 1));
                 }
             }
         }
@@ -154,14 +170,14 @@ public class MessageServices {
     public List<Message> findMessageByKeywordInUser(String words,User user1,User user2)
     {
         List<Message> messageList = new ArrayList<Message>();
-        for (Message message : user1.getReceivedMessage())
+        for (Message message : user1.getReceivedMessages())
         {
             if(message.getContent().toLowerCase().contains(words.toLowerCase()))
             {
                 messageList.add(message);
             }
         }
-        for (Message message : user2.getReceivedMessage())
+        for (Message message : user2.getReceivedMessages())
         {
             if(message.getContent().toLowerCase().contains(words.toLowerCase()))
             {
