@@ -31,12 +31,12 @@ public class UserServices {
             }
             else
             {
-                result="Looks like these are not your correct details. Please try again.";
+                result="Wrong password! Please try again.";
             }
         }
         else
         {
-            result="Looks like these are not your correct details. Please try again.";
+            result="Wrong username! Please try again.";
         }
         return result;
     }

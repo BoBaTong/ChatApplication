@@ -73,7 +73,7 @@ public class User {
 
 
     public User(String lastName, String firstName, String fullName, String username, String password) {
-        id = count++;
+        id = ++count;
         this.lastName = lastName;
         this.firstName = firstName;
         this.fullName = fullName;
