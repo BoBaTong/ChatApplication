@@ -5,52 +5,59 @@ import com.student.repository.UserRepository;
 import com.student.services.UserServices;
 import com.student.user.User;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class UserServicesTest {
-    DataStorage dataStorage;
-    UserServices userServices;
-    UserRepository userRepository;
-    User user;
+    static DataStorage dataStorage;
+    static UserServices userServices;
+    static UserRepository userRepository;
+    static User findUserTong, findUserTu;
+    static String loginSuccess, loginWrongPassword, loginWrongUsername;
 
-    @BeforeEach
-    void setUp() throws Exception{
+    @BeforeAll
+    public static void setUp() throws Exception{
         dataStorage = DataStorage.getInstance();
         userServices = new UserServices();
         userRepository = new UserRepository();
+
+        //create new users
+        userServices.saveUser("tongbo","tong","fsf","tongbo","fkwqopfk");
+        userServices.saveUser("van","tu","vvtt","tuvan","aabbccdd");
+
+        //test login
+        loginSuccess = userServices.login("tongbo","fkwqopfk");
+        loginWrongPassword = userServices.login("tongbo","fkwqop");
+        loginWrongUsername = userServices.login("tongb","fkwqop");
+
+        //test find friend
+        findUserTong = userRepository.getUserByUsername("tongbo");
+        findUserTu = userRepository.getUserByID(1);
     }
 
     @Test
     public void testSaveUser()throws NoSuchFieldException,IllegalAccessException
     {
-        userServices.saveUser("tongbo","tong","fsf","tongbo","fkwqopfk");
         Assertions.assertTrue(userServices.checkUserExist("tongbo"));
-
-        userServices.saveUser("van","tu","vvtt","tuvan","aabbccdd");
         Assertions.assertTrue(userServices.checkUserExist("tuvan"));
     }
 
     @Test
     public void testLogin()throws NoSuchFieldException,IllegalAccessException
     {
-        String res = userServices.login("tongbo","fkwqopfk");
-        Assertions.assertEquals("Login success!", res);
+        Assertions.assertEquals("Login success!", loginSuccess);
 
-        res = userServices.login("tongbo","fkwqop");
-        Assertions.assertEquals("Wrong password! Please try again.", res);
+        Assertions.assertEquals("Wrong password! Please try again.", loginWrongPassword);
 
-        res = userServices.login("tongb","fkwqop");
-        Assertions.assertEquals("Wrong username! Please try again.", res);
+        Assertions.assertEquals("Wrong username! Please try again.", loginWrongUsername);
     }
 
     @Test
     public void testFindFriend()throws NoSuchFieldException,IllegalAccessException
     {
-        user = userRepository.getUserByUsername("tongbo");
-        Assertions.assertEquals("tong", user.getFirstName());
+        Assertions.assertEquals("tong", findUserTong.getFirstName());
 
-        user = userRepository.getUserByID(2);
-        Assertions.assertEquals("vvtt", user.getFullName());
+        Assertions.assertEquals("vvtt", findUserTu.getFullName());
     }
 }

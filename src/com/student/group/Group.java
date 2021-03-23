@@ -27,7 +27,7 @@ public abstract class Group {
     }
 
     public Group() {
-        id=++count;
+        id=count++;
     }
 
     public String getInviteCode() {

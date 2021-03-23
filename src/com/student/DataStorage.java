@@ -79,8 +79,9 @@ public class DataStorage {
             return index = groupCollection.indexOf(obj);
         }else if (PublicGroup.class.equals(obj.getClass())) {
             return index = groupCollection.indexOf(obj);
-        }
-        else if (File.class.equals(obj.getClass())) {
+        }else if (PrivateGroup.class.equals(obj.getClass())) {
+            return index = groupCollection.indexOf(obj);
+        } else if (File.class.equals(obj.getClass())) {
             return index = fileCollection.indexOf(obj);
         } else {
             throw new InputMismatchException("Please input correctly type");
@@ -102,8 +103,9 @@ public class DataStorage {
             groupCollection.set(index,(Group) obj);
         }else if (PublicGroup.class.equals(obj.getClass())) {
             groupCollection.set(index,(Group) obj);
-        }
-        else if (File.class.equals(obj.getClass())) {
+        }else if (PrivateGroup.class.equals(obj.getClass())) {
+            groupCollection.set(index,(Group) obj);
+        } else if (File.class.equals(obj.getClass())) {
             fileCollection.set(index,(File) obj);
         } else {
             throw new InputMismatchException("Please input correctly type");

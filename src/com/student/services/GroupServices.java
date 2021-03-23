@@ -25,12 +25,14 @@ public class GroupServices {
             PrivateGroup group = new PrivateGroup();
             group.getAdminGroup().add(user);
             group.getListOfUser().add(user);
+            group.setGroupType(GroupType.Private);
             groupRepository.save(group);
             result="Private group created successful!";
         } else if (groupSelection == 1) {
             PublicGroup group = new PublicGroup();
             group.getAdminGroup().add(user);
             group.getListOfUser().add(user);
+            group.setGroupType(GroupType.Public);
             groupRepository.save(group);
             result="Public group created successful!, invite code: "+ group.getInviteCode();
         } else
@@ -61,7 +63,7 @@ public class GroupServices {
             groupRepository.update(group, groupRepository.getIndexOfObject(group));
             result="You're added to the group.";
         } else
-            result="Invalid invite code or group doesnt exist!.";
+            result="Invalid invite code or group doesn't exist!";
         return result;
     }
 
