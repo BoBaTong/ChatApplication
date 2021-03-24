@@ -1,6 +1,6 @@
 package com.student.file;
 
-public abstract class File {
+public class File {
     private int id=0;
     private String fileName;
     private String filePath;
@@ -39,7 +39,7 @@ public abstract class File {
         this.fileType = fileType;
     }
 
-    public File(int id, String fileName, String filePath) {
+    public File(String fileName, String filePath) {
         id = count++;
         this.fileName = fileName;
         this.filePath = filePath;
