@@ -1,5 +1,6 @@
 package com.student.user;
 
+import com.student.file.File;
 import com.student.message.Message;
 
 import java.util.ArrayList;
@@ -23,7 +24,15 @@ public class User {
     private Map<User,String> alias;
     private List<Integer> sentMessages;
     private List<Integer> sentFiles;
+    private List<File> receivedFiles;
 
+    public List<File> getReceivedFiles() {
+        return receivedFiles;
+    }
+
+    public void setReceivedFiles(List<File> receivedFiles) {
+        this.receivedFiles = receivedFiles;
+    }
 
     public List<Message> getReceivedMessages() {
         return receivedMessages;

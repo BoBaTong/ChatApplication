@@ -53,7 +53,7 @@ public class MessageServices {
             throws NoSuchFieldException, IllegalAccessException {
         file.setFileName(file.getId() + "");
         userRepository.getUserByID(receiveID).getSentFiles().add(file.getId());
-        userRepository.getUserByID(sendID).getSentFiles().add(file.getId());
+        userRepository.getUserByID(sendID).getReceivedFiles().add(file);
         //update
     }
 
@@ -132,6 +132,21 @@ public class MessageServices {
         }
         return fileList;
 
+    }
+
+    public List<Message> showAllFileUser(int userID, int user2ID)
+            throws NoSuchFieldException, IllegalAccessException {
+        List<Message> fileList = new ArrayList<Message>();
+        User user1 = userRepository.getUserByID(userID);
+        User user2 = userRepository.getUserByID(user2ID);
+        for (int messageID : user1.getSentFiles()) {
+            for (int i = user2.getReceivedFiles().size(); i > 0; i--) {
+                if(messageID==user2.getReceivedMessages().get(i - 1).getId()) {
+                    fileList.add(user2.getReceivedMessages().get(i - 1));
+                }
+            }
+        }
+        return fileList;
     }
     //showAllFilePrivateGroup same as showAllFilePublicGroup
 
