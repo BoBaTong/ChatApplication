@@ -43,7 +43,7 @@ public class File {
         id = count++;
         this.fileName = fileName;
         this.filePath = filePath;
-        String [] path = filePath.split(".");
+        String [] path = filePath.split("\\.");
         if(path[path.length-1].equals("mp4") || path[path.length-1].equals("avi"))
         {
             this.fileType = FileType.Video;

@@ -20,6 +20,7 @@ public class GroupServicesTest {
     static String inviteCode, createPrivateGroup, createGroupError, joinByInviteCode, joinByInviteCodeError;
     static User userTong, userTu, userBinh;
     static int numOfMemInGroup0, numOfMemInGroup1;
+    static String aMemLeaveGroup, notAMemLeaveGroup;
 
     @BeforeAll
     public static void setUp() throws Exception{
@@ -61,6 +62,10 @@ public class GroupServicesTest {
 
         numOfMemInGroup0 = dataStorage.getGroupCollection().get(0).getListOfUser().size();
         numOfMemInGroup1 = dataStorage.getGroupCollection().get(1).getListOfUser().size();
+
+        //test leave group
+        notAMemLeaveGroup = groupServices.leaveGroup(userBinh, dataStorage.getGroupCollection().get(0));
+        aMemLeaveGroup = groupServices.leaveGroup(userBinh, dataStorage.getGroupCollection().get(1));
     }
 
     @Test
@@ -87,5 +92,13 @@ public class GroupServicesTest {
         Assertions.assertEquals(2, numOfMemInGroup0);
 
         Assertions.assertEquals(3, numOfMemInGroup1);
+    }
+
+    @Test
+    public void testLeaveGroup() throws NoSuchFieldException,IllegalAccessException
+    {
+        Assertions.assertEquals("You're not a member", notAMemLeaveGroup);
+
+        Assertions.assertEquals("You've left the group", aMemLeaveGroup);
     }
 }

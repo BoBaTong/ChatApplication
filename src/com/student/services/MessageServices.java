@@ -42,7 +42,6 @@ public class MessageServices {
 
     public void sendFileToGroup(File file, int receiveID, int sendID)
             throws NoSuchFieldException, IllegalAccessException {
-        file.setFileName(file.getId() + "");
         groupRepository.getGroupByID(receiveID).groupFiles.add(file);
         userRepository.getUserByID(sendID).getSentFiles().add(file.getId());
         //update
@@ -51,9 +50,8 @@ public class MessageServices {
 
     public void sendFileToUser(File file, int receiveID, int sendID)
             throws NoSuchFieldException, IllegalAccessException {
-        file.setFileName(file.getId() + "");
-        userRepository.getUserByID(receiveID).getSentFiles().add(file.getId());
-        userRepository.getUserByID(sendID).getReceivedFiles().add(file);
+        userRepository.getUserByID(sendID).getSentFiles().add(file.getId());
+        userRepository.getUserByID(receiveID).getReceivedFiles().add(file);
         //update
     }
 
@@ -108,13 +106,12 @@ public class MessageServices {
 
     public List<Message> showLatestMessageGroupExceptM(int userID,int groupID,int k,int m)
             throws NoSuchFieldException, IllegalAccessException {
-        User user = userRepository.getUserByID(userID);
-        Group group = groupRepository.getGroupByID(groupID);
         List<Message> messageList = showLatestMessageGroup(userID,groupID,k);
-        for (int i = 0; i < m ; i++) {
-            messageList.remove(i);
+        List<Message> messageListReturn = new ArrayList<>();
+        for (int i = m; i < k ; i++) {
+            messageListReturn.add(messageList.get(i));
         }
-        return messageList;
+        return messageListReturn;
     }
 
     //showMessagePrivateGroup same as showMessagePublicGroup
@@ -134,15 +131,15 @@ public class MessageServices {
 
     }
 
-    public List<Message> showAllFileUser(int userID, int user2ID)
+    public List<File> showAllFileUser(int userID, int user2ID)
             throws NoSuchFieldException, IllegalAccessException {
-        List<Message> fileList = new ArrayList<Message>();
+        List<File> fileList = new ArrayList<>();
         User user1 = userRepository.getUserByID(userID);
         User user2 = userRepository.getUserByID(user2ID);
         for (int messageID : user1.getSentFiles()) {
             for (int i = user2.getReceivedFiles().size(); i > 0; i--) {
-                if(messageID==user2.getReceivedMessages().get(i - 1).getId()) {
-                    fileList.add(user2.getReceivedMessages().get(i - 1));
+                if(messageID==user2.getReceivedFiles().get(i - 1).getId()) {
+                    fileList.add(user2.getReceivedFiles().get(i - 1));
                 }
             }
         }
@@ -150,22 +147,44 @@ public class MessageServices {
     }
     //showAllFilePrivateGroup same as showAllFilePublicGroup
 
-    public void deleteMessage(Group group,User user,Message message)
+    public void deleteMessageInGroup(Group group,User user,Message message)
     {
         if(group.groupMessages.contains(message) && user.getSentMessages().contains(message.getId()))
         {
             group.groupMessages.remove(message);
-            user.getSentMessages().remove(message.getId());
+            user.getSentMessages().remove((Integer) message.getId());
             //update
         }
     }
 
-    public void deleteFile(Group group,User user,File file)
+    public void deleteFileInGroup(Group group,User user,File file)
     {
         if(group.groupFiles.contains(file) && user.getSentFiles().contains(file.getId()))
         {
             group.groupFiles.remove(file);
-            user.getSentFiles().remove(file.getId());
+            user.getSentFiles().remove((Integer) file.getId());
+            //update
+        }
+    }
+
+    public void deleteMessageUser(User userSent,User userReceived,Message message)
+    {
+        if(userSent.getSentMessages().contains(message.getId())
+        && userReceived.getReceivedMessages().contains(message))
+        {
+            userReceived.getReceivedMessages().remove(message);
+            userSent.getSentMessages().remove((Integer) message.getId());
+            //update
+        }
+    }
+
+    public void deleteFileUser(User userSent,User userReceived,File file)
+    {
+        if(userSent.getSentFiles().contains(file.getId())
+        && userReceived.getReceivedFiles().contains(file))
+        {
+            userReceived.getReceivedFiles().remove(file);
+            userSent.getSentFiles().remove((Integer) file.getId());
             //update
         }
     }

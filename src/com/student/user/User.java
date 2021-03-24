@@ -90,6 +90,7 @@ public class User {
         this.password = password;
         this.sentFiles = new ArrayList<>();
         this.sentMessages = new ArrayList<>();
+        this.receivedFiles = new ArrayList<>();
         this.receivedMessages = new ArrayList<>();
         this.alias = new HashMap<User,String>();
     }

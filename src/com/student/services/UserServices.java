@@ -56,11 +56,16 @@ public class UserServices {
          else
              return false;
     }
-    public String setAlias(User user1,User user2,String alias)
+    public String setAlias(User userSetAlias, User userGetAlias, String alias)
     {
-        String result;
-        user1.getAlias().put(user2,alias);
-        return result="Set alias success!";
+        String result = "Set alias fail!";
+        userSetAlias.getAlias().put(userGetAlias,alias);
+
+        if(userSetAlias.getAlias().get(userGetAlias).equals(alias)){
+            result="Set alias success!";
+        }
+
+        return result;
         //update
     }
 }

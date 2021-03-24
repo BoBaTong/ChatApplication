@@ -13,8 +13,8 @@ public class UserServicesTest {
     static DataStorage dataStorage;
     static UserServices userServices;
     static UserRepository userRepository;
-    static User findUserTong, findUserTu;
-    static String loginSuccess, loginWrongPassword, loginWrongUsername;
+    static User userTong, userTu;
+    static String loginSuccess, loginWrongPassword, loginWrongUsername, resOfSetAlias;
 
     @BeforeAll
     public static void setUp() throws Exception{
@@ -32,8 +32,11 @@ public class UserServicesTest {
         loginWrongUsername = userServices.login("tongb","fkwqop");
 
         //test find friend
-        findUserTong = userRepository.getUserByUsername("tongbo");
-        findUserTu = userRepository.getUserByID(1);
+        userTong = userRepository.getUserByUsername("tongbo");
+        userTu = userRepository.getUserByID(1);
+
+        //test set alias
+        resOfSetAlias = userServices.setAlias(userTong, userTu, "Tin");
     }
 
     @Test
@@ -56,8 +59,14 @@ public class UserServicesTest {
     @Test
     public void testFindFriend()throws NoSuchFieldException,IllegalAccessException
     {
-        Assertions.assertEquals("tong", findUserTong.getFirstName());
+        Assertions.assertEquals("tong", userTong.getFirstName());
 
-        Assertions.assertEquals("vvtt", findUserTu.getFullName());
+        Assertions.assertEquals("vvtt", userTu.getFullName());
+    }
+
+    @Test
+    public void testSetAlias()throws NoSuchFieldException,IllegalAccessException
+    {
+        Assertions.assertEquals("Set alias success!", resOfSetAlias);
     }
 }
