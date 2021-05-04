@@ -8,6 +8,8 @@ import com.student.repository.UserRepository;
 import com.student.user.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -89,6 +91,14 @@ public class MessageServices {
                 }
             }
         }
+        for (int messageID : user2.getSentMessages()) {
+            for (int i = user1.getReceivedMessages().size(); i > 0; i--) {
+                if(messageID==user1.getReceivedMessages().get(i - 1).getId()) {
+                    messageList.add(user2.getReceivedMessages().get(i - 1));
+                }
+            }
+        }
+        messageList.sort((o1, o2) -> o2.getId() - o1.getId());
         return messageList;
     }
     public List<Message> showLatestMessageGroup(int userID, int groupID, int k)
@@ -143,6 +153,14 @@ public class MessageServices {
                 }
             }
         }
+        for (int messageID : user2.getSentFiles()) {
+            for (int i = user1.getReceivedFiles().size(); i > 0; i--) {
+                if(messageID==user1.getReceivedFiles().get(i - 1).getId()) {
+                    fileList.add(user1.getReceivedFiles().get(i - 1));
+                }
+            }
+        }
+        fileList.sort(((o1, o2) -> o2.getId()-o1.getId()));
         return fileList;
     }
     //showAllFilePrivateGroup same as showAllFilePublicGroup

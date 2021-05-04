@@ -12,7 +12,6 @@ import java.util.*;
 public class DataStorage {
     private static DataStorage instance;
     private static List<User> userCollection;
-
     private static List<Group> groupCollection;
 
 

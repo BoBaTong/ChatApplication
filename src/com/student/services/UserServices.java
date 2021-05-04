@@ -41,7 +41,7 @@ public class UserServices {
         return result;
     }
 
-    public boolean checkHashPassword(String username,String password) throws NoSuchFieldException,IllegalAccessException
+    private boolean checkHashPassword(String username,String password) throws NoSuchFieldException,IllegalAccessException
     {
         String hashedPassword = MD5.getMd5(password);
            return userRepository.getUserByUsername(username).getPassword().equals(hashedPassword);
